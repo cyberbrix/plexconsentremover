@@ -7,7 +7,7 @@ TOKEN='[REDACTED]'
 consentlist=$(curl -sX GET 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Token: $TOKEN"  -H "Accept: application/json")
 
 # For testing, change false to true, language to null
-#consentlist=$(sed 's/"language":"en"/"language":null/g; s/"consent":false/"consent":true/g' <<<$consentlist)
+#consentlist=$(sed 's/"language":"en"/"language":null/g; s/"consent":false/"consent":true/g' <<<"$consentlist")
 
 # Load vendors giving concent into variable
 plexconsent=$(jq  -r '.vendors[] | select(.consent) | "\( .id)"' <<<"$consentlist")
