@@ -10,7 +10,7 @@ consentlist=$(curl -sX GET 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Tok
 #consentlist=$(sed 's/"language":"en"/"language":null/g; s/"consent":false/"consent":true/g' <<<$consentlist)
 
 # Load vendors giving concent into variable
-plexconsent=$(jq  -r '.vendors[] | select(.consent) | "\( .id)"' <<<$consentlist)
+plexconsent=$(jq  -r '.vendors[] | select(.consent) | "\( .id)"' <<<"$consentlist")
 
 # If consent has been given to some sites - check them
 if [ -n "$plexconsent" ]
@@ -21,7 +21,7 @@ then
   echo "The following vendors have consent to gather your info from Plex:"
   while IFS= read -r line
     do
-      echo $vendorlist | jq -r --argjson i $line '.vendors[] | select(.id == $i).name'
+      jq -r --argjson i $line '.vendors[] | select(.id == $i).name' <<<"$vendorlist"
   done <<< "$plexconsent"
 else
   # echo "No changes" - keep commented for use in a cronjob
@@ -29,7 +29,7 @@ else
 fi
 
 # Updating consent and language
-modifiedconsent=$(jq '.language="en"' <<<$consentlist | jq '. | .vendors[].consent = false')
+modifiedconsent=$(jq '.language="en"' <<<"$consentlist" | jq '. | .vendors[].consent = false')
 
 # Update consent data
 curl --fail -sX PUT 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Token: $TOKEN" -H "Accept: application/json" -H "Content-Type: application/json" --data "$modifiedconsent"
