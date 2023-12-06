@@ -24,7 +24,7 @@ then
       echo $vendorlist | jq -r --argjson i $line '.vendors[] | select(.id == $i).name'
   done <<< "$plexconsent"
 else
-  echo "No changes"
+  # echo "No changes" - keep commented for use in a cronjob
   exit 0
 fi
 
@@ -40,3 +40,4 @@ then
   echo "Error posting updated consent to Plex"
   exit $exit_code
 fi
+exit 0
