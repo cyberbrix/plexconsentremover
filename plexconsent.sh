@@ -1,10 +1,24 @@
 #!/bin/bash
 
+#requirements
+# jq
+
+# check if JQ installed
+if ! type jq &> /dev/null
+then
+  echo "jq is not installed"
+  exit 1
+fi
+
+
 # Replace '[REDACTED]' with your actual Plex token
 TOKEN='[REDACTED]'
 
 # Fetch consent data
 consentlist=$(curl -sX GET 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Token: $TOKEN"  -H "Accept: application/json")
+
+# Will add data validation here shortly
+
 
 # For testing, change false to true, language to null
 #consentlist=$(sed 's/"language":"en"/"language":null/g; s/"consent":false/"consent":true/g' <<<"$consentlist")
