@@ -13,7 +13,6 @@ fi
 
 # Replace '[REDACTED]' with your actual Plex token
 TOKEN='[REDACTED]'
-TOKEN='SUzw1tsUm6sCDHE8PZZd'
 
 # Fetch consent data
 consentlist=$(curl -sX GET 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Token: $TOKEN"  -H "Accept: application/json")
