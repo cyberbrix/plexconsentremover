@@ -36,7 +36,7 @@ fi
 # For testing, change false to true, language to null
 #consentlist=$(sed 's/"language":"en"/"language":null/g; s/"consent":false/"consent":true/g' <<<"$consentlist")
 
-# Load vendors giving concent into variable
+# Load vendors giving consent into variable
 plexconsent=$(jq  -r '.vendors[] | select(.consent) | "\( .id)"' <<<"$consentlist")
 
 # If consent has been given to some sites - check them
@@ -45,7 +45,7 @@ then
   # Download vendor list
   vendorlist=$(curl -s GET "https://plex.tv/api/v2/ads/vendors?region=US")
   # List out the vendors with consent given
-  echo "The following vendors have consent to gather your info from Plex. Removing concent."
+  echo "The following vendors have consent to gather your info from Plex. Removing consent."
   while IFS= read -r line
     do
       jq -r --argjson i $line '.vendors[] | select(.id == $i).name' <<<"$vendorlist"
@@ -65,9 +65,9 @@ curl --fail -sX PUT 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Token: $TO
 exit_code=$?
 if [ $exit_code != 0 ]
 then
-  echo "Error updating consent to Plex"
+  echo "\nError updating consent to Plex"
   exit $exit_code
 else
-  echo "Updated consent status"
+  echo "\nUpdated consent status"
   exit 0
 fi

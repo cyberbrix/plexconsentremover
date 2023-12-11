@@ -10,3 +10,7 @@ Credit to https://www.reddit.com/r/PleX/comments/188yb9e/bash_script_to_optout_o
 I stood on the shoulders of giants to make this.
 
 You need your plex token first to do this: https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
+
+To run as cron, make sure you have mail enabled.
+
+/<path_to_script>/plexconsent.sh | mail -E'set nonullbody' -s "Plex Consent $(date +\%F)" <email address>
