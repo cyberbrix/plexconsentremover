@@ -65,9 +65,9 @@ curl --fail -sX PUT 'https://plex.tv/api/v2/user/consent'  -H "X-Plex-Token: $TO
 exit_code=$?
 if [ $exit_code != 0 ]
 then
-  echo "\nError updating consent to Plex"
+  echo -e "\nError updating consent to Plex"
   exit $exit_code
 else
-  echo "\nUpdated consent status"
+  echo -e "\nUpdated consent status"
   exit 0
 fi
